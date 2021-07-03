@@ -4,16 +4,7 @@ public class Movimientos {
 
     String[][] tablero;
 
-    //Metodo de copiado de tablero
-    private void copiarTablero(String[][] arr) {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                arr[i][j] = tablero[i][j];
-            }
-        }
-    }
-
-    //Metodo que comprueba si un movimiento es valido o no
+    // Metodo que comprueba si un movimiento es valido o no
     public boolean esPosibleEsteMovimiento(String[][] tablero, String posicionAntigua, String posicionNueva) {
         this.tablero = tablero;
         String[] posicionesPosibles;
@@ -30,7 +21,7 @@ public class Movimientos {
         return false;
     }
 
-    //Metodo que comprueba si un enroque es posible o no
+    // Metodo que comprueba si un enroque es posible o no
     private void comprobarAcercaDeEnrroque(String posAntigua) {
         if (posAntigua.equals("74")) {
             Controlador.Controlador.enrroqueReyA = false;
@@ -47,7 +38,8 @@ public class Movimientos {
         }
     }
 
-    //Metodo que regresa la nueva posicion al realizar un movimiento en las piezas blancas
+    // Metodo que regresa la nueva posicion al realizar un movimiento en las piezas
+    // blancas
     public String[] movimientosAmodificados(String[][] tableroM, String posicion) {
         String[] posiblesMovimientos = movimientosFichas(tableroM, posicion);
         int x = Character.getNumericValue(posicion.charAt(1));
@@ -56,7 +48,8 @@ public class Movimientos {
         return modificacionTodosMovimientos(tableroM, posicion, posiblesMovimientos);
     }
 
-    //Metodo que regresa la nueva posicion al realizar un movimiento en las piezas negras
+    // Metodo que regresa la nueva posicion al realizar un movimiento en las piezas
+    // negras
     public String[] movimientosBmodificados(String[][] tableroM, String posicion) {
         String[] posiblesMovimientos = movimientosFichas(tableroM, posicion);
         int x = Character.getNumericValue(posicion.charAt(1));
@@ -65,16 +58,19 @@ public class Movimientos {
         return modificacionTodosMovimientos(tableroM, posicion, posiblesMovimientos);
     }
 
-    /*Metodo que valida si en la nueva posicion se encuentra vacia, 
-    una pieza del mismo color o una pieza del contrincante y que regresa un 
-    arreglo con las nuevas posiciones*/
-    private String[] modificacionTodosMovimientos(String[][] tableroFuturo, String posicionInicial, String[] posicionesFinales) {
+    /*
+     * Metodo que valida si en la nueva posicion se encuentra vacia, una pieza del
+     * mismo color o una pieza del contrincante y que regresa un arreglo con las
+     * nuevas posiciones
+     */
+    private String[] modificacionTodosMovimientos(String[][] tableroFuturo, String posicionInicial,
+            String[] posicionesFinales) {
         String posicionesDefinitivas = "";
 
         int xInicial = Character.getNumericValue(posicionInicial.charAt(1));
         int yInicial = Character.getNumericValue(posicionInicial.charAt(0));
 
-        //Validacion de si en la nueva posicion se encuentra o no una pieza
+        // Validacion de si en la nueva posicion se encuentra o no una pieza
         String ficha = fichaDeLaCasilla(tableroFuturo, yInicial, xInicial);
         if (posicionesFinales != null) {
             for (int i = 0; i < posicionesFinales.length; i++) {
@@ -110,7 +106,8 @@ public class Movimientos {
         return null;
     }
 
-    //Metodo de Creacion de una copia del tablero (Cuando sufre alguna modificacion)
+    // Metodo de Creacion de una copia del tablero (Cuando sufre alguna
+    // modificacion)
     private void copiarTableroPrimeroAlSegundo(String[][] tableroOrigen, String[][] tableroCopia) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -119,8 +116,11 @@ public class Movimientos {
         }
     }
 
-    /*Metodo que controla y manda llamar todos los posibles movimientos correspondiente al elegir
-    una pieza en el tablero (piezas del bot) para regresar los movimientos validos*/
+    /*
+     * Metodo que controla y manda llamar todos los posibles movimientos
+     * correspondiente al elegir una pieza en el tablero (piezas del bot) para
+     * regresar los movimientos validos
+     */
     public String[] todosLosMovimientosFichasB(String[][] tableroM) {
 
         String posicionesTotales = "";
@@ -129,7 +129,7 @@ public class Movimientos {
             for (int j = 0; j < 8; j++) {
                 String ficha = fichaDeLaCasilla(tableroM, i, j);
 
-                //Validacion de cual ficha ha sido seleccionada
+                // Validacion de cual ficha ha sido seleccionada
                 if (ficha.equals("B_torre")) {
                     posicionesTotales += transformarApalabra(movimientoTorreBSoloAtaque(tableroM, i, j));
                 } else if (ficha.equals("B_alfil")) {
@@ -152,7 +152,8 @@ public class Movimientos {
 
     }
 
-    //Metodo que valida y regresa el movimiento valido de la pieza seleccionada (piezas bot)
+    // Metodo que valida y regresa el movimiento valido de la pieza seleccionada
+    // (piezas bot)
     public String[] movimientoAtaqueFichaB(String[][] tableroM, int i, int j) {
 
         String posicionesTotales = "";
@@ -178,7 +179,8 @@ public class Movimientos {
 
     }
 
-    //Metodo que valida y regresa el movimiento valido de la pieza seleccionada (piezas Adversario)
+    // Metodo que valida y regresa el movimiento valido de la pieza seleccionada
+    // (piezas Adversario)
     public String[] movimientoAtaqueFichaA(String[][] tableroM, int i, int j) {
 
         String posicionesTotales = "";
@@ -204,8 +206,11 @@ public class Movimientos {
 
     }
 
-    /*Metodo que controla y manda llamar todos los posibles movimientos correspondiente al elegir
-    una pieza en el tablero (piezas del adversario) para regresar los movimientos validos*/
+    /*
+     * Metodo que controla y manda llamar todos los posibles movimientos
+     * correspondiente al elegir una pieza en el tablero (piezas del adversario)
+     * para regresar los movimientos validos
+     */
     public String[] todosLosMovimientosFichasA(String[][] tableroM) {
 
         String posicionesTotales = "";
@@ -235,7 +240,6 @@ public class Movimientos {
 
     }
 
-
     private String transformarApalabra(String[] array) {
         String palabra = "";
         for (int i = 0; i < array.length; i++) {
@@ -244,7 +248,8 @@ public class Movimientos {
         return palabra;
     }
 
-    //Metodo que controla y manda a llamar el movimiento de cualquier ficha en el tablero
+    // Metodo que controla y manda a llamar el movimiento de cualquier ficha en el
+    // tablero
     public String[] movimientosFichas(String[][] tableroM, String posicion) {
         int x = Character.getNumericValue(posicion.charAt(1));
         int y = Character.getNumericValue(posicion.charAt(0));
@@ -278,8 +283,10 @@ public class Movimientos {
         return null;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) del
-    peon del adversario que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) del peon
+     * del adversario que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoPeonA(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
 
@@ -313,17 +320,18 @@ public class Movimientos {
 
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
-    del peon del adversario que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
+     * del peon del adversario que valida y regresa los posibles movimientos del
+     * mismo
+     */
     private String[] movimientoPeonASoloAtaque(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
         try {
-            String forcarError = tableroM[y - 1][x + 1];
             posicionesPosibles += "" + (y - 1) + "" + (x + 1) + "_";
         } catch (Exception ex) {
         }
         try {
-            String forcarError = tableroM[y - 1][x - 1];
             posicionesPosibles += "" + (y - 1) + "" + (x - 1) + "_";
         } catch (Exception ex) {
         }
@@ -333,19 +341,19 @@ public class Movimientos {
 
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
-    del peon del bot que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
+     * del peon del bot que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoPeonBSoloAtaque(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
 
         try {
-            String forcarError = tableroM[y + 1][x + 1];
             posicionesPosibles += "" + (y + 1) + "" + (x + 1) + "_";
         } catch (Exception ex) {
         }
 
         try {
-            String forcarError = tableroM[y + 1][x - 1];
             posicionesPosibles += "" + (y + 1) + "" + (x - 1) + "_";
         } catch (Exception ex) {
         }
@@ -355,8 +363,10 @@ public class Movimientos {
 
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) del
-    peon del bot que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) del peon
+     * del bot que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoPeonB(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
 
@@ -390,14 +400,16 @@ public class Movimientos {
         return arrayPosicionesPosibles;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de la
-    torre del adversario que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de la
+     * torre del adversario que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoTorreA(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
         int i;
         boolean seguir;
 
-        //Movimiento hacia abajo
+        // Movimiento hacia abajo
         seguir = true;
         i = y;
         do {
@@ -418,7 +430,7 @@ public class Movimientos {
 
         } while (seguir);
 
-        //Movimiento hacia arriba
+        // Movimiento hacia arriba
         seguir = true;
         i = y;
         do {
@@ -439,7 +451,7 @@ public class Movimientos {
 
         } while (seguir);
 
-        //Movimiento hacia la izquierda
+        // Movimiento hacia la izquierda
         seguir = true;
         i = x;
         do {
@@ -460,7 +472,7 @@ public class Movimientos {
 
         } while (seguir);
 
-        //Movimiento hacia la derecha
+        // Movimiento hacia la derecha
         seguir = true;
         i = x;
         do {
@@ -487,14 +499,17 @@ public class Movimientos {
 
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque de la
-    torre del adversario que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
+     * de la torre del adversario que valida y regresa los posibles movimientos del
+     * mismo
+     */
     private String[] movimientoTorreASoloAtaque(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
         int i;
         boolean seguir;
 
-        //Movimiento hacia abajo
+        // Movimiento hacia abajo
         seguir = true;
         i = y;
         do {
@@ -516,7 +531,7 @@ public class Movimientos {
 
         } while (seguir);
 
-        //Movimiento hacia arriba
+        // Movimiento hacia arriba
         seguir = true;
         i = y;
         do {
@@ -538,7 +553,7 @@ public class Movimientos {
 
         } while (seguir);
 
-        //Movimiento hacia la izquierda
+        // Movimiento hacia la izquierda
         seguir = true;
         i = x;
         do {
@@ -560,7 +575,7 @@ public class Movimientos {
 
         } while (seguir);
 
-        //Movimiento hacia la derecha
+        // Movimiento hacia la derecha
         seguir = true;
         i = x;
         do {
@@ -587,14 +602,16 @@ public class Movimientos {
         return arrayPosicionesPosibles;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque de la
-    torre del bot que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
+     * de la torre del bot que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoTorreBSoloAtaque(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
         int i;
         boolean seguir;
 
-        //Movimiento hacia abajo
+        // Movimiento hacia abajo
         seguir = true;
         i = y;
         do {
@@ -616,7 +633,7 @@ public class Movimientos {
 
         } while (seguir);
 
-        //Movimiento hacia arriba
+        // Movimiento hacia arriba
         seguir = true;
         i = y;
         do {
@@ -638,7 +655,7 @@ public class Movimientos {
 
         } while (seguir);
 
-        //Movimiento hacia la izquierda
+        // Movimiento hacia la izquierda
         seguir = true;
         i = x;
         do {
@@ -660,7 +677,7 @@ public class Movimientos {
 
         } while (seguir);
 
-        //Movimiento hacia la derecha
+        // Movimiento hacia la derecha
         seguir = true;
         i = x;
         do {
@@ -688,14 +705,16 @@ public class Movimientos {
 
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de la
-    torre del bot que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de la
+     * torre del bot que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoTorreB(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
         int i;
         boolean seguir;
 
-        //Movimiento hacia abajo
+        // Movimiento hacia abajo
         seguir = true;
         i = y;
         do {
@@ -716,7 +735,7 @@ public class Movimientos {
 
         } while (seguir);
 
-        //Movimiento hacia arriba
+        // Movimiento hacia arriba
         seguir = true;
         i = y;
         do {
@@ -737,7 +756,7 @@ public class Movimientos {
 
         } while (seguir);
 
-        //Movimiento hacia la izquierda
+        // Movimiento hacia la izquierda
         seguir = true;
         i = x;
         do {
@@ -758,7 +777,7 @@ public class Movimientos {
 
         } while (seguir);
 
-        //Movimiento hacia la derecha
+        // Movimiento hacia la derecha
         seguir = true;
         i = x;
         do {
@@ -785,8 +804,10 @@ public class Movimientos {
 
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) del
-    alfil del adversario que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) del alfil
+     * del adversario que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoAlfilA(String[][] tableroM, int y, int x) {
         boolean seguir;
         int i;
@@ -874,8 +895,11 @@ public class Movimientos {
 
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de atque del
-    alfil del adversario que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de atque
+     * del alfil del adversario que valida y regresa los posibles movimientos del
+     * mismo
+     */
     private String[] movimientoAlfilASoloAtaque(String[][] tableroM, int y, int x) {
         boolean seguir;
         int i;
@@ -967,8 +991,10 @@ public class Movimientos {
 
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque del
-    alfil del bot que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
+     * del alfil del bot que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoAlfilBSoloAtaque(String[][] tableroM, int y, int x) {
         boolean seguir;
         int i;
@@ -1060,8 +1086,10 @@ public class Movimientos {
 
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) del
-    alfil del bot que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) del alfil
+     * del bot que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoAlfilB(String[][] tableroM, int y, int x) {
         boolean seguir;
         int i;
@@ -1149,13 +1177,16 @@ public class Movimientos {
 
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) del
-    caballo del adversario que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) del
+     * caballo del adversario que valida y regresa los posibles movimientos del
+     * mismo
+     */
     private String[] movimientoCaballoA(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
 
         try {
-            //Movimiento arriba-iaquierda
+            // Movimiento arriba-iaquierda
             if (tableroM[y - 2][x - 1].equals("") || comprobarSiLaFichaEsnegra(tableroM, y - 2, x - 1)) {
                 posicionesPosibles += "" + (y - 2) + "" + (x - 1) + "_";
             }
@@ -1163,7 +1194,7 @@ public class Movimientos {
         }
 
         try {
-            //Movimiento arriba-derecha
+            // Movimiento arriba-derecha
             if (tableroM[y - 2][x + 1].equals("") || comprobarSiLaFichaEsnegra(tableroM, y - 2, x + 1)) {
                 posicionesPosibles += "" + (y - 2) + "" + (x + 1) + "_";
             }
@@ -1171,7 +1202,7 @@ public class Movimientos {
         }
 
         try {
-            //Movimiento abajo-izquierda
+            // Movimiento abajo-izquierda
             if (tableroM[y + 2][x - 1].equals("") || comprobarSiLaFichaEsnegra(tableroM, y + 2, x - 1)) {
                 posicionesPosibles += "" + (y + 2) + "" + (x - 1) + "_";
             }
@@ -1179,7 +1210,7 @@ public class Movimientos {
         }
 
         try {
-            //Movimiento abajo-derecha
+            // Movimiento abajo-derecha
             if (tableroM[y + 2][x + 1].equals("") || comprobarSiLaFichaEsnegra(tableroM, y + 2, x + 1)) {
                 posicionesPosibles += "" + (y + 2) + "" + (x + 1) + "_";
             }
@@ -1187,7 +1218,7 @@ public class Movimientos {
         }
 
         try {
-            //Movimiento izquierda-arriba
+            // Movimiento izquierda-arriba
             if (tableroM[y - 1][x - 2].equals("") || comprobarSiLaFichaEsnegra(tableroM, y - 1, x - 2)) {
                 posicionesPosibles += "" + (y - 1) + "" + (x - 2) + "_";
             }
@@ -1203,7 +1234,7 @@ public class Movimientos {
         }
 
         try {
-            //Movimiento derecha-arriba
+            // Movimiento derecha-arriba
             if (tableroM[y - 1][x + 2].equals("") || comprobarSiLaFichaEsnegra(tableroM, y - 1, x + 2)) {
                 posicionesPosibles += "" + (y - 1) + "" + (x + 2) + "_";
             }
@@ -1211,7 +1242,7 @@ public class Movimientos {
         }
 
         try {
-            //Movimiento derecha-abajo
+            // Movimiento derecha-abajo
             if (tableroM[y + 1][x + 2].equals("") || comprobarSiLaFichaEsnegra(tableroM, y + 1, x + 2)) {
                 posicionesPosibles += "" + (y + 1) + "" + (x + 2) + "_";
             }
@@ -1223,61 +1254,56 @@ public class Movimientos {
         return arregloPosicionesPosibles;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque del
-    caballo del adversario que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
+     * del caballo del adversario que valida y regresa los posibles movimientos del
+     * mismo
+     */
     private String[] movimientoCaballoASoloAtaque(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 2][x - 1];
             posicionesPosibles += "" + (y - 2) + "" + (x - 1) + "_";
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 2][x + 1];
             posicionesPosibles += "" + (y - 2) + "" + (x + 1) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 2][x - 1];
             posicionesPosibles += "" + (y + 2) + "" + (x - 1) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 2][x + 1];
             posicionesPosibles += "" + (y + 2) + "" + (x + 1) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 1][x - 2];
             posicionesPosibles += "" + (y - 1) + "" + (x - 2) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 1][x - 2];
             posicionesPosibles += "" + (y + 1) + "" + (x - 2) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 1][x + 2];
             posicionesPosibles += "" + (y - 1) + "" + (x + 2) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 1][x + 2];
             posicionesPosibles += "" + (y + 1) + "" + (x + 2) + "_";
 
         } catch (Exception ex) {
@@ -1288,61 +1314,55 @@ public class Movimientos {
         return arregloPosicionesPosibles;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque del
-    caballo del bot que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
+     * del caballo del bot que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoCaballoBSoloAtaque(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 2][x - 1];
             posicionesPosibles += "" + (y - 2) + "" + (x - 1) + "_";
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 2][x + 1];
             posicionesPosibles += "" + (y - 2) + "" + (x + 1) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 2][x - 1];
             posicionesPosibles += "" + (y + 2) + "" + (x - 1) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 2][x + 1];
             posicionesPosibles += "" + (y + 2) + "" + (x + 1) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 1][x - 2];
             posicionesPosibles += "" + (y - 1) + "" + (x - 2) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 1][x - 2];
             posicionesPosibles += "" + (y + 1) + "" + (x - 2) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 1][x + 2];
             posicionesPosibles += "" + (y - 1) + "" + (x + 2) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 1][x + 2];
             posicionesPosibles += "" + (y + 1) + "" + (x + 2) + "_";
 
         } catch (Exception ex) {
@@ -1353,13 +1373,15 @@ public class Movimientos {
         return arregloPosicionesPosibles;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) del
-    caballo del bot que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) del
+     * caballo del bot que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoCaballoB(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
 
         try {
-            //Movimiento arriba-iaquierda
+            // Movimiento arriba-iaquierda
             if (tableroM[y - 2][x - 1].equals("") || comprobarSiLaFichaEsBlanca(tableroM, y - 2, x - 1)) {
                 posicionesPosibles += "" + (y - 2) + "" + (x - 1) + "_";
             }
@@ -1367,7 +1389,7 @@ public class Movimientos {
         }
 
         try {
-            //Movimiento arriba-derecha
+            // Movimiento arriba-derecha
             if (tableroM[y - 2][x + 1].equals("") || comprobarSiLaFichaEsBlanca(tableroM, y - 2, x + 1)) {
                 posicionesPosibles += "" + (y - 2) + "" + (x + 1) + "_";
             }
@@ -1375,7 +1397,7 @@ public class Movimientos {
         }
 
         try {
-            //Movimiento abajo-izquierda
+            // Movimiento abajo-izquierda
             if (tableroM[y + 2][x - 1].equals("") || comprobarSiLaFichaEsBlanca(tableroM, y + 2, x - 1)) {
                 posicionesPosibles += "" + (y + 2) + "" + (x - 1) + "_";
             }
@@ -1383,7 +1405,7 @@ public class Movimientos {
         }
 
         try {
-            //Movimiento abajo-derecha
+            // Movimiento abajo-derecha
             if (tableroM[y + 2][x + 1].equals("") || comprobarSiLaFichaEsBlanca(tableroM, y + 2, x + 1)) {
                 posicionesPosibles += "" + (y + 2) + "" + (x + 1) + "_";
             }
@@ -1391,7 +1413,7 @@ public class Movimientos {
         }
 
         try {
-            //Movimiento izquierda-arriba
+            // Movimiento izquierda-arriba
             if (tableroM[y - 1][x - 2].equals("") || comprobarSiLaFichaEsBlanca(tableroM, y - 1, x - 2)) {
                 posicionesPosibles += "" + (y - 1) + "" + (x - 2) + "_";
             }
@@ -1407,7 +1429,7 @@ public class Movimientos {
         }
 
         try {
-            //Movimiento derecha-arriba
+            // Movimiento derecha-arriba
             if (tableroM[y - 1][x + 2].equals("") || comprobarSiLaFichaEsBlanca(tableroM, y - 1, x + 2)) {
                 posicionesPosibles += "" + (y - 1) + "" + (x + 2) + "_";
             }
@@ -1415,7 +1437,7 @@ public class Movimientos {
         }
 
         try {
-            //Movimiento derecha-abajo
+            // Movimiento derecha-abajo
             if (tableroM[y + 1][x + 2].equals("") || comprobarSiLaFichaEsBlanca(tableroM, y + 1, x + 2)) {
                 posicionesPosibles += "" + (y + 1) + "" + (x + 2) + "_";
             }
@@ -1427,8 +1449,10 @@ public class Movimientos {
         return arregloPosicionesPosibles;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de la
-    reina del adversario que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de la
+     * reina del adversario que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoReinaA(String[][] tableroM, int y, int x) {
         String[] movimientoDiagonal = movimientoAlfilA(tableroM, y, x);
         String[] movimientoRecto = movimientoTorreA(tableroM, y, x);
@@ -1452,8 +1476,11 @@ public class Movimientos {
         return movimientosReina;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque de la
-    reina del adversario que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
+     * de la reina del adversario que valida y regresa los posibles movimientos del
+     * mismo
+     */
     private String[] movimientoReinaASoloAtaque(String[][] tableroM, int y, int x) {
         String[] movimientoDiagonal = movimientoAlfilASoloAtaque(tableroM, y, x);
         String[] movimientoRecto = movimientoTorreASoloAtaque(tableroM, y, x);
@@ -1477,8 +1504,10 @@ public class Movimientos {
         return movimientosReina;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque de la
-    reina del bot que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
+     * de la reina del bot que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoReinaBSoloAtaque(String[][] tableroM, int y, int x) {
         String[] movimientoDiagonal = movimientoAlfilBSoloAtaque(tableroM, y, x);
         String[] movimientoRecto = movimientoTorreBSoloAtaque(tableroM, y, x);
@@ -1502,8 +1531,10 @@ public class Movimientos {
         return movimientosReina;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de la
-    reina del bot que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de la
+     * reina del bot que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoReinaB(String[][] tableroM, int y, int x) {
         String[] movimientoDiagonal = movimientoAlfilB(tableroM, y, x);
         String[] movimientoRecto = movimientoTorreB(tableroM, y, x);
@@ -1527,8 +1558,10 @@ public class Movimientos {
         return movimientosReina;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) del
-    rey del adversario que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) del rey
+     * del adversario que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoReyA(String[][] tableroM, int y, int x) {
 
         String posicionesPosibles = "";
@@ -1589,12 +1622,14 @@ public class Movimientos {
         } catch (Exception ex) {
         }
 
-        //Enrroque 
+        // Enrroque
         if (Controlador.Controlador.enrroqueReyA == true) {
-            if (tableroM[7][1].equals("") && tableroM[7][2].equals("") && tableroM[7][3].equals("") && Controlador.Controlador.enrroqueTorreIzquierdaA == true) {
+            if (tableroM[7][1].equals("") && tableroM[7][2].equals("") && tableroM[7][3].equals("")
+                    && Controlador.Controlador.enrroqueTorreIzquierdaA == true) {
                 posicionesPosibles += "" + "72" + "_";
             }
-            if (tableroM[7][5].equals("") && tableroM[7][6].equals("") && Controlador.Controlador.enrroqueTorreDerechaA == true) {
+            if (tableroM[7][5].equals("") && tableroM[7][6].equals("")
+                    && Controlador.Controlador.enrroqueTorreDerechaA == true) {
                 posicionesPosibles += "" + "76" + "_";
             }
         }
@@ -1604,8 +1639,11 @@ public class Movimientos {
         return arregloPosicionesPosibles;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque del
-    rey del adversario que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
+     * del rey del adversario que valida y regresa los posibles movimientos del
+     * mismo
+     */
     private String[] movimientoReyASoloAtaque(String[][] tableroM, int y, int x) {
 
         String posicionesPosibles = "";
@@ -1679,8 +1717,10 @@ public class Movimientos {
         return arregloPosicionesPosibles;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque del
-    rey del bot que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) de ataque
+     * del rey del bot que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoReyBSoloAtaque(String[][] tableroM, int y, int x) {
 
         String posicionesPosibles = "";
@@ -1757,8 +1797,10 @@ public class Movimientos {
         return arregloPosicionesPosibles;
     }
 
-    /*Metodo de movimiento permitido (conforme a las reglas del ajedrez) del
-    rey del bot que valida y regresa los posibles movimientos del mismo*/
+    /*
+     * Metodo de movimiento permitido (conforme a las reglas del ajedrez) del rey
+     * del bot que valida y regresa los posibles movimientos del mismo
+     */
     private String[] movimientoReyB(String[][] tableroM, int y, int x) {
 
         String posicionesPosibles = "";
@@ -1824,12 +1866,12 @@ public class Movimientos {
         return arregloPosicionesPosibles;
     }
 
-    //Metodo que obtiene la posición de la ficha o pieza
+    // Metodo que obtiene la posición de la ficha o pieza
     private String fichaDeLaCasilla(String[][] tableroM, int y, int x) {
         return tableroM[y][x];
     }
 
-    //Metodo que valida si la ficha es negra (del bot)
+    // Metodo que valida si la ficha es negra (del bot)
     private boolean comprobarSiLaFichaEsnegra(String[][] tableroM, int y, int x) {
         if (!tableroM[y][x].equals("")) {
             return (tableroM[y][x].charAt(0) == 'B') ? true : false;
@@ -1837,7 +1879,7 @@ public class Movimientos {
         return false;
     }
 
-    //Metodo que valida si la ficha es blanca (del adversario)
+    // Metodo que valida si la ficha es blanca (del adversario)
     private boolean comprobarSiLaFichaEsBlanca(String[][] tableroM, int y, int x) {
         if (!tableroM[y][x].equals("")) {
             return (tableroM[y][x].charAt(0) == 'A') ? true : false;
@@ -1845,7 +1887,7 @@ public class Movimientos {
         return false;
     }
 
-    //Metodo que valida si el rey del adversario se encuentra en Jaque
+    // Metodo que valida si el rey del adversario se encuentra en Jaque
     private boolean reyAenJaque(String[][] tableroM) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -1867,7 +1909,7 @@ public class Movimientos {
         return false;
     }
 
-    //Metodo que valida si el rey del bot se encuentra en Jaque
+    // Metodo que valida si el rey del bot se encuentra en Jaque
     private boolean reyBenJaque(String[][] tableroM) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
