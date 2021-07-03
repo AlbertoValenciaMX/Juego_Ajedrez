@@ -9,13 +9,15 @@ public class Bot {
     boolean primerMovimiento = true;
     int[][] puntuacionesPosiciones = new int[8][8];
 
-    // Te retorna las posicion antigua[0] y la posicion nueva[1]
+    // Regresa un arreglo con la posición antigua y otro con la nueva posición
     public String[] movimientoBot(String[][] tablero) {
         this.tablero = tablero;
         examinarLasCasillasAtacadasAlInicio();
         return arregloFinal();
     }
 
+    // Se encarga de evaluar el movimiento de las blancas y asignar los valores
+    // delos movimientos
     private String[] arregloFinal() {
 
         int puntuacionMaxima = -600;
@@ -25,6 +27,7 @@ public class Bot {
         int xFinal = 4;
         boolean jaqueMate = true;
 
+        // Recorremos el tablero y evaluamos a las negras
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (comprobarSiLaFichaEsnegra(tablero, i, j)) {
@@ -41,8 +44,10 @@ public class Bot {
                             int intEjeY = Integer.parseInt(String.valueOf(ejeY));
                             int intEjeX = Integer.parseInt(String.valueOf(ejeX));
                             System.out.println(ficha + " : " + posicionFinal);
+                            // Mandamos a analizar la puntuación de la pieza
                             int puntuacionPosicionEspecifica = punutacionMovimiento(i, j, intEjeY, intEjeX);
                             System.out.println(puntuacionPosicionEspecifica);
+                            // Dependiendo del valor nos quedamos con el mejor movimiento
                             if (puntuacionMaxima <= puntuacionPosicionEspecifica) {
                                 yInicial = i;
                                 xInicial = j;
@@ -62,9 +67,12 @@ public class Bot {
             }
         }
 
+        // Asignamos el movimiento
         String posicionAntigua = "" + yInicial + "" + xInicial;
         String posicionNueva = "" + yFinal + "" + xFinal;
 
+        // Esta acción solo se ejecuta la primera vez ya que es la mejor forma de
+        // arrancar con la negras y así iniciar el bot
         if (primerMovimiento) {
             posicionAntigua = "14";
             posicionNueva = "34";
@@ -72,15 +80,19 @@ public class Bot {
         }
         System.out.println("Fin turno");
 
+        // Habilitamos la ventana del mate de las negras
         if (jaqueMate == true) {
             MateHaciaNegras ventana = new MateHaciaNegras(null, true);
             ventana.setVisible(true);
         }
+        // Asignamos los valores y lo regresamos
         String arrayPosiciones[] = { posicionAntigua, posicionNueva };
         return arrayPosiciones;
 
     }
 
+    // Obtiene la puntuación analizando todas las posibilidades del movimiento de la
+    // pieza
     private int punutacionMovimiento(int yInicial, int xInicial, int yFinal, int xFinal) {
         int puntuacion = 0;
         puntuacion += puntuacionEnCasoDeFichaAtaque(yInicial, xInicial, yFinal, xFinal);
@@ -92,6 +104,7 @@ public class Bot {
         return puntuacion;
     }
 
+    // Analiza como el movimiento que realiza puede tener repercuciones
     private int puntuacionMovimientosEnFuturo(int yInicial, int xInicial, int yFinal, int xFinal) {
         int puntuacion = 0;
         String tableroFuturo[][] = new String[8][8];
@@ -112,6 +125,7 @@ public class Bot {
         }
     }
 
+    // Analiza la defensa de una pieza puntuandola dependiendo de su cobertura
     private int fichaQuePuedeDefender(String[][] tableroM, int y, int x) {
         String[] ataquesEsaFicha = movimientos.movimientoAtaqueFichaB(tableroM, y, x);
         int valor = 0;
@@ -127,6 +141,7 @@ public class Bot {
         return valor;
     }
 
+    // Analiza el posibles ataques que puede realizar puntuando cada uno
     private int fichaQuePuedeAtacar(String[][] tableroM, int y, int x) {
         String[] ataquesEsaFicha = movimientos.movimientoAtaqueFichaB(tableroM, y, x);
         int valor = 0;
@@ -142,6 +157,7 @@ public class Bot {
         return valor;
     }
 
+    // Revisa si en un futuro movimiento la pieza de Rey puede caer en Jaque
     private boolean podriaHacerJaqueMate(String[][] tableroFuturo) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -171,6 +187,7 @@ public class Bot {
         return false;
     }
 
+    // Analiza si las blancas hacen un Jaque Mate al rey negro
     private boolean miReyEnJaqueMate(String[][] tableroM) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -189,6 +206,8 @@ public class Bot {
         return true;
     }
 
+    // funcion para puntuar a una pieza que realiza doble función
+    // atacar y defender
     private int puntuacionParaDefenderComiendo(String[][] tableroM, int yInicial, int xInicial, int yFinal,
             int xFinal) {
         String posicionFichaQueAtacaValiosa = posicionFichaQueAtacaAlaMasValiosa(tableroM);
@@ -208,6 +227,8 @@ public class Bot {
         return 0;
     }
 
+    // Realiza una comparación entre lo que se gana y se pierde al realizar un
+    // movimiento
     private boolean fichaQueAtacaValiosaEsMayorOigualQueLaQueLaAtaca(String[][] tableroM, int yInicial, int xInicial,
             int yFinal, int xFinal) {
         String fichaQueAtacaMasValiosa = tableroM[yFinal][xFinal];
@@ -219,11 +240,13 @@ public class Bot {
         return (valorAtacaMasValiosa >= valorQueLaAtaca) ? true : false;
     }
 
+    // Operación booleana que comprueba el ataque realizado
     private boolean comprobarSiLaPosicionDeAtaqueCoincideConLaQueAtaca(int yFinal, int xFinal, String posAtaque) {
         String posicionAtaca = "" + yFinal + "" + xFinal;
         return (posicionAtaca.equals(posAtaque)) ? true : false;
     }
 
+    // Busca a la ficha más valiosa dentro de los movimientos de las blancas
     private int valorFichaMasValiosaAtacadaEnElTablero(String[][] tableroM) {
         String[] movimientosFichasA = movimientos.todosLosMovimientosFichasA(tableroM);
         int valorMayor = 0;
@@ -245,6 +268,8 @@ public class Bot {
         return valorMayor;
     }
 
+    // Busca dentro de los movimientos de las negras
+    // atacar a la más valiosa de las blancas
     private String posicionFichaQueAtacaAlaMasValiosa(String[][] tableroM) {
         String posicionAtacanteMasValiosa = "ninguna";
         int valorMayor = 0;
@@ -274,6 +299,8 @@ public class Bot {
         return posicionAtacanteMasValiosa;
     }
 
+    // Evalua si en el siguiente movimiento se puede realiza un jaque mate a las
+    // piezas blancas
     private boolean jaqueMateHaciaEl(String[][] tableroM) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -289,8 +316,8 @@ public class Bot {
         return true;
     }
 
+    // Buscamos al rey y luego vemos todas los movimientos posibles de las blancas
     private boolean miReyEnJaque(String[][] tableroM) {
-        // Buscamos primero al rey y luego vemos todas los movimientos posibles de A
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (tableroM[i][j].equals("B_rey")) {
@@ -308,6 +335,7 @@ public class Bot {
         return false;
     }
 
+    // Realizamos una copia del tablero para usarla en la clase
     private void copiarTablero(String[][] tableroM) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -316,6 +344,7 @@ public class Bot {
         }
     }
 
+    // Vaciamos la información del tablero a otro
     private void copiarTablero(String[][] tableroOriginal, String[][] tableroCopia) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -324,6 +353,7 @@ public class Bot {
         }
     }
 
+    // Evalua la viabilidad de mover a una casilla segura
     private int puntuacionCasillaSegura(int y, int x) {
         String posicionFinal = "" + y + "" + x;
         String movimientosAtaqueA[] = movimientos.todosLosMovimientosFichasA(tablero);
@@ -335,6 +365,7 @@ public class Bot {
         return 3;
     }
 
+    // Regresa la puntuación que la pieza colabora a la hora de defender
     private int puntuacionSiEstaDefendiendo(int y, int x) {
         int puntuacion = 0;
         String[] movimientosDefensora = movimientos.movimientoAtaqueFichaB(tablero, y, x);
@@ -351,6 +382,7 @@ public class Bot {
         return puntuacion;
     }
 
+    // Cuando una ficha ataca comprueba que accienes realiza
     private int puntuacionEnCasoDeFichaAtaque(int yInicial, int xInicial, int yFinal, int xFinal) {
         String fichaInicial = fichaDeLaCasilla(tablero, yInicial, xInicial);
         if (comprobarSiLaFichaEsBlanca(tablero, yFinal, xFinal)) {
@@ -377,17 +409,19 @@ public class Bot {
         return 0;
     }
 
+    // Solo regresa el nombre de la pieza
     private String devolverFichaSintetizada(String ficha) {
         String[] array = ficha.split("_");
         return array[1];
     }
 
+    // Es el primer metodo en ejecutarse
     private void examinarLasCasillasAtacadasAlInicio() {
         // Reinicia la variable puntacionesPosiciones (todas las casillas con un valor
         // de cero)
         ajustarPuntuacion0();
         // Recorremos todo el tablero obteniendo solo las fichas blancas que serán el
-        // rival
+        // rival del bot
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (comprobarSiLaFichaEsBlanca(tablero, i, j)) {
@@ -395,10 +429,13 @@ public class Bot {
                     String fichaAtacante = tablero[i][j];
                     String[] movimientosPosibles = movimientos.movimientosFichas(tablero, posicion);
                     try {
+                        // Por cada ficha analizamos los movimientos
                         for (int k = 0; k < movimientosPosibles.length; k++) {
                             int yM = Character.getNumericValue(movimientosPosibles[k].charAt(0));
                             int xM = Character.getNumericValue(movimientosPosibles[k].charAt(1));
                             String fichaAtacada = tablero[yM][xM];
+                            // Analizamos las posibilidades y sus posibles puntuaciones dependiendo cual
+                            // ficha es la que ataca
                             if (comprobarSiLaFichaEsnegra(tablero, yM, xM)) {
                                 String posicionFichaAtacada = "" + yM + "" + xM;
                                 if (valeMasLaPrimera(fichaAtacada, fichaAtacante)) {
@@ -415,6 +452,7 @@ public class Bot {
         }
     }
 
+    // Comprueba si una pueza esta defendiendo por otra en el caso de las blancas
     private boolean estaLaFichaDefendidaPorA(String[][] tableroM, String posicionFicha) {
         String[] movimientosVariables = movimientos.todosLosMovimientosFichasA(tableroM);
         for (int k = 0; k < movimientosVariables.length; k++) {
@@ -425,6 +463,7 @@ public class Bot {
         return false;
     }
 
+    // Comprueba si una pueza esta defendiendo por otra en el caso de las negras
     private boolean estaLaFichaDefendidaPorB(String[][] tableroM, String posicionFicha) {
         String[] movimientosVariables = movimientos.todosLosMovimientosFichasB(tableroM);
         for (int k = 0; k < movimientosVariables.length; k++) {
@@ -435,6 +474,7 @@ public class Bot {
         return false;
     }
 
+    // Comprueba el color de pieza
     private boolean comprobarSiLaFichaEsBlanca(String[][] tableroM, int y, int x) {
         if (!tableroM[y][x].equals("")) {
             return (tableroM[y][x].charAt(0) == 'A') ? true : false;
@@ -442,6 +482,7 @@ public class Bot {
         return false;
     }
 
+    // Comprueba el color de pieza
     private boolean comprobarSiLaFichaEsnegra(String[][] tableroM, int y, int x) {
         if (!tableroM[y][x].equals("")) {
             return (tableroM[y][x].charAt(0) == 'B') ? true : false;
@@ -449,11 +490,13 @@ public class Bot {
         return false;
     }
 
+    // Regresa el nombre de la pieza que esta en las cordenadas
     private String fichaDeLaCasilla(String[][] tableroM, int y, int x) {
         String ficha = tableroM[y][x];
         return ficha;
     }
 
+    // Reinicia los valores del tablero a cero
     private void ajustarPuntuacion0() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -462,6 +505,8 @@ public class Bot {
         }
     }
 
+    // Evalua si son diferentes los valores regresando el true si el primero es el
+    // mayor de los dos parametros
     private boolean valeMasLaPrimera(String ficha1, String ficha2) {
         String[] ficha1Split = ficha1.split("_");
         String[] ficha2Split = ficha2.split("_");
@@ -472,6 +517,7 @@ public class Bot {
         return (valor1 > valor2) ? true : false;
     }
 
+    // Evalua el valor de dos piezas en operacion boleana
     private boolean valenIgual(String ficha1, String ficha2) {
         String[] ficha1Split = ficha1.split("_");
         String[] ficha2Split = ficha2.split("_");
@@ -482,6 +528,7 @@ public class Bot {
         return (valor1 == valor2) ? true : false;
     }
 
+    // Regresa el valor de la pieza evaluada
     private int valorDeLaFicha(String ficha) {
         String ficha1 = ficha;
         if (ficha.charAt(0) == 'A' || ficha.charAt(0) == 'B') {
@@ -505,6 +552,7 @@ public class Bot {
         return valor;
     }
 
+    // Regresa el valor de la pieza mandada a evaluar sin el rey
     private int valorDeLaFichaSinRey(String ficha) {
         String ficha1 = ficha;
         if (ficha.charAt(0) == 'A' || ficha.charAt(0) == 'B') {

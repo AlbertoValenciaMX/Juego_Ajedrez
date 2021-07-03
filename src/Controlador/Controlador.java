@@ -29,6 +29,7 @@ public class Controlador implements ActionListener {
     Movimientos movimientos;
     Bot bot = new Bot();
 
+    //Constructor de clase controlador
     public Controlador() {
         iniciarTablero();
         VistaTablero vista = new VistaTablero();
@@ -37,6 +38,7 @@ public class Controlador implements ActionListener {
         movimientos = new Movimientos();
     }
 
+    //Iniciador de tablero
     private void iniciarTablero() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -44,11 +46,13 @@ public class Controlador implements ActionListener {
             }
         }
 
+        //Colocacion de peones en el tablero
         for (int i = 0; i < 8; i++) {
             tablero[1][i] = "B_peon";
             tablero[6][i] = "A_peon";
         }
 
+        //Colocación de piezas faltantes en el tablero (piezas del bot)
         tablero[0][0] = "B_torre";
         tablero[0][1] = "B_caballo";
         tablero[0][2] = "B_alfil";
@@ -58,6 +62,7 @@ public class Controlador implements ActionListener {
         tablero[0][6] = "B_caballo";
         tablero[0][7] = "B_torre";
 
+        //Colocación de piezas faltantes en el tablero (piezas del adversario)
         tablero[7][0] = "A_torre";
         tablero[7][1] = "A_caballo";
         tablero[7][2] = "A_alfil";
@@ -68,6 +73,7 @@ public class Controlador implements ActionListener {
         tablero[7][7] = "A_torre";
     }
 
+    //Inicializacion de eventos en el tablero (con un clic)
     private void añadirActionEvents() {
         VistaTablero.c00.addActionListener(this);
         VistaTablero.c01.addActionListener(this);
@@ -142,11 +148,14 @@ public class Controlador implements ActionListener {
         VistaTablero.c77.addActionListener(this);
     }
 
+    //Metodo que controla cada jugada
     @Override
     public void actionPerformed(ActionEvent ae) {
+        //turno del adversario
         if (turnoJugador == 'A') {
             posicionActual = getBotonPosicionString(ae.getSource());
 
+            //Validacion si la nueva posicion esta vacia o se encuentra una pieza del bot
             if (comprobarSiLaFichaEsBlanca(posicionActual)) {
                 posicionAntigua = posicionActual;
             } else if (posicionAntigua != null) {
@@ -162,6 +171,7 @@ public class Controlador implements ActionListener {
         }
     }
     
+    //Metodo de validacion de Jaque Mate hacia piezas del adversario
     private void comprobarJaqueMateHaciaBlancas(){
         boolean jaqueMate = true;
         for(int i = 0;i<8;i++){
@@ -184,12 +194,13 @@ public class Controlador implements ActionListener {
         
     }
     
+    //Turno de bot
     private void turnoMaquina(){
             String[] movimientos = bot.movimientoBot(tablero);
             cambiarFichas(movimientos[0], movimientos[1]);
     }
     
-    
+    //Metodo que controla el movimiento de una pieza (cambio de antigua posicion a la nueva)
     private void cambiarFichas(String posAntigua, String posNueva) {
         cambiarEnString(posAntigua, posNueva);
         cambiarEnPantalla(posAntigua, posNueva);
@@ -197,6 +208,7 @@ public class Controlador implements ActionListener {
         comprobarEnrroque(posAntigua, posNueva);
     }
 
+    //Metodo que controla el movimiento de una pieza (obteniendo las coordenadas correspondientes)
     private void cambiarEnString(String posAntigua, String posNueva) {
         int xA = Character.getNumericValue(posAntigua.charAt(1));
         int yA = Character.getNumericValue(posAntigua.charAt(0));
@@ -208,11 +220,14 @@ public class Controlador implements ActionListener {
         tablero[yA][xA] = "";
     }
 
+    //Metodo que controla el movimiento de una pieza (cambio de antigua posicion a la nueva en pantalla)
     private void cambiarEnPantalla(String posAntigua, String posNueva) {
         boton(posNueva).setIcon(boton(posAntigua).getIcon());
         boton(posAntigua).setIcon(null);
     }
 
+    /*Metodo presente cuando un peon logra llegar al otro lado del tablero
+    en el cual puede elegir nueva pieza*/
     private void comprobarPeonEnUltimaFila() {
         for (int i = 0; i < 8; i++) {
             if (tablero[0][i].equals("A_peon")) {
@@ -236,6 +251,7 @@ public class Controlador implements ActionListener {
         ventanaElec.setVisible(true);
     }
 
+    //Método de control de validación de enrroque
     private void comprobarEnrroque(String posAntigua, String posNueva) {
         int xN = Character.getNumericValue(posNueva.charAt(1));
         int yN = Character.getNumericValue(posNueva.charAt(0));
@@ -268,6 +284,7 @@ public class Controlador implements ActionListener {
         }
     }
 
+    //Metodo que valida cuando es elegido cada uno de los cuadros del tablero en la pantalla
     private JButton boton(String posicion) {
         if (posicion.equals("00")) {
             return VistaTablero.c00;
@@ -401,6 +418,7 @@ public class Controlador implements ActionListener {
         return null;
     }
 
+    //Metodo que controla la posicion en el tablero que ha sido seleccionada
     private String getBotonPosicionString(Object boton) {
         if (boton == VistaTablero.c00) {
             return "00";
@@ -534,6 +552,7 @@ public class Controlador implements ActionListener {
         return null;
     }
 
+    //Metodo que valida que el contrincante elige solo sus fichas correspondientes (blancas)
     private boolean comprobarSiLaFichaEsBlanca(String posicion) {
         int x = Character.getNumericValue(posicion.charAt(1));
         int y = Character.getNumericValue(posicion.charAt(0));
