@@ -9,7 +9,7 @@ public class Bot {
     boolean primerMovimiento = true;
     int[][] puntuacionesPosiciones = new int[8][8];
 
-    //Te retorna las posicion antigua[0] y la posicion nueva[1]
+    // Te retorna las posicion antigua[0] y la posicion nueva[1]
     public String[] movimientoBot(String[][] tablero) {
         this.tablero = tablero;
         examinarLasCasillasAtacadasAlInicio();
@@ -17,6 +17,7 @@ public class Bot {
     }
 
     private String[] arregloFinal() {
+
         int puntuacionMaxima = -600;
         int yInicial = 1;
         int xInicial = 4;
@@ -75,7 +76,7 @@ public class Bot {
             MateHaciaNegras ventana = new MateHaciaNegras(null, true);
             ventana.setVisible(true);
         }
-        String arrayPosiciones[] = {posicionAntigua, posicionNueva};
+        String arrayPosiciones[] = { posicionAntigua, posicionNueva };
         return arrayPosiciones;
 
     }
@@ -188,7 +189,8 @@ public class Bot {
         return true;
     }
 
-    private int puntuacionParaDefenderComiendo(String[][] tableroM, int yInicial, int xInicial, int yFinal, int xFinal) {
+    private int puntuacionParaDefenderComiendo(String[][] tableroM, int yInicial, int xInicial, int yFinal,
+            int xFinal) {
         String posicionFichaQueAtacaValiosa = posicionFichaQueAtacaAlaMasValiosa(tableroM);
         if (!posicionFichaQueAtacaValiosa.equals("ninguna")) {
             if (comprobarSiLaPosicionDeAtaqueCoincideConLaQueAtaca(yFinal, xFinal, posicionFichaQueAtacaValiosa)) {
@@ -196,7 +198,8 @@ public class Bot {
                 if (estaLaFichaDefendidaPorA(tableroM, posicionFichaQueAtacaValiosa) == false) {
                     return valorFichaMasValiosa * 3;
                 } else {
-                    if (fichaQueAtacaValiosaEsMayorOigualQueLaQueLaAtaca(tableroM, yInicial, xInicial, yFinal, xFinal)) {
+                    if (fichaQueAtacaValiosaEsMayorOigualQueLaQueLaAtaca(tableroM, yInicial, xInicial, yFinal,
+                            xFinal)) {
                         return valorFichaMasValiosa * 2;
                     }
                 }
@@ -205,7 +208,8 @@ public class Bot {
         return 0;
     }
 
-    private boolean fichaQueAtacaValiosaEsMayorOigualQueLaQueLaAtaca(String[][] tableroM, int yInicial, int xInicial, int yFinal, int xFinal) {
+    private boolean fichaQueAtacaValiosaEsMayorOigualQueLaQueLaAtaca(String[][] tableroM, int yInicial, int xInicial,
+            int yFinal, int xFinal) {
         String fichaQueAtacaMasValiosa = tableroM[yFinal][xFinal];
         String fichaQueLaAtaca = tableroM[yInicial][xInicial];
 
@@ -213,23 +217,6 @@ public class Bot {
         int valorQueLaAtaca = valorDeLaFicha(fichaQueLaAtaca);
 
         return (valorAtacaMasValiosa >= valorQueLaAtaca) ? true : false;
-
-    }
-
-    private String buscarFichaQueLaDefiende(String[][] tableroM, String posicion) {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (comprobarSiLaFichaEsBlanca(tableroM, i, j)) {
-                    String[] movimientosAtaque = movimientos.movimientoAtaqueFichaA(tableroM, i, j);
-                    for (int k = 0; k < movimientosAtaque.length; k++) {
-                        if (movimientosAtaque[k].equals(posicion)) {
-                            return tableroM[i][j];
-                        }
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     private boolean comprobarSiLaPosicionDeAtaqueCoincideConLaQueAtaca(int yFinal, int xFinal, String posAtaque) {
@@ -303,7 +290,7 @@ public class Bot {
     }
 
     private boolean miReyEnJaque(String[][] tableroM) {
-        //Buscamos primero al rey y luego vemos todas los movimientos posibles de A
+        // Buscamos primero al rey y luego vemos todas los movimientos posibles de A
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (tableroM[i][j].equals("B_rey")) {
@@ -369,7 +356,7 @@ public class Bot {
         if (comprobarSiLaFichaEsBlanca(tablero, yFinal, xFinal)) {
 
             String fichaFinal = fichaDeLaCasilla(tablero, yFinal, xFinal);
-            
+
             String posicionFinal = "" + yFinal + "" + xFinal;
 
             if (estaLaFichaDefendidaPorA(tablero, posicionFinal) == false) {
@@ -396,7 +383,11 @@ public class Bot {
     }
 
     private void examinarLasCasillasAtacadasAlInicio() {
+        // Reinicia la variable puntacionesPosiciones (todas las casillas con un valor
+        // de cero)
         ajustarPuntuacion0();
+        // Recorremos todo el tablero obteniendo solo las fichas blancas que serán el
+        // rival
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (comprobarSiLaFichaEsBlanca(tablero, i, j)) {
@@ -459,15 +450,6 @@ public class Bot {
     }
 
     private String fichaDeLaCasilla(String[][] tableroM, int y, int x) {
-        String ficha = tableroM[y][x];
-        return ficha;
-    }
-
-    private String fichaDeLaCasilla(String[][] tableroM, String posicion) {
-        char ejeY = posicion.charAt(0);
-        char ejeX = posicion.charAt(1);
-        int y = Integer.parseInt(String.valueOf(ejeY));
-        int x = Integer.parseInt(String.valueOf(ejeX));
         String ficha = tableroM[y][x];
         return ficha;
     }
