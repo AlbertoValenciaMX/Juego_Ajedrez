@@ -16,8 +16,8 @@ public class Bot {
         return arregloFinal();
     }
 
-    // Se encarga de evaluar el movimiento de las blancas y asignar los valores
-    // delos movimientos
+    // Se encarga de evaluar el movimiento de las negras y asignar los valores
+    // de los movimientos
     private String[] arregloFinal() {
 
         int puntuacionMaxima = -600;

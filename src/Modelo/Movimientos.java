@@ -42,8 +42,8 @@ public class Movimientos {
     // blancas
     public String[] movimientosAmodificados(String[][] tableroM, String posicion) {
         String[] posiblesMovimientos = movimientosFichas(tableroM, posicion);
-        int x = Character.getNumericValue(posicion.charAt(1));
-        int y = Character.getNumericValue(posicion.charAt(0));
+        // int x = Character.getNumericValue(posicion.charAt(1));
+        // int y = Character.getNumericValue(posicion.charAt(0));
 
         return modificacionTodosMovimientos(tableroM, posicion, posiblesMovimientos);
     }
@@ -52,8 +52,8 @@ public class Movimientos {
     // negras
     public String[] movimientosBmodificados(String[][] tableroM, String posicion) {
         String[] posiblesMovimientos = movimientosFichas(tableroM, posicion);
-        int x = Character.getNumericValue(posicion.charAt(1));
-        int y = Character.getNumericValue(posicion.charAt(0));
+        // int x = Character.getNumericValue(posicion.charAt(1));
+        // int y = Character.getNumericValue(posicion.charAt(0));
 
         return modificacionTodosMovimientos(tableroM, posicion, posiblesMovimientos);
     }
@@ -328,12 +328,12 @@ public class Movimientos {
     private String[] movimientoPeonASoloAtaque(String[][] tableroM, int y, int x) {
         String posicionesPosibles = "";
         try {
-            String forcarError = tableroM[y - 1][x + 1];
+            // String forcarError = tableroM[y - 1][x + 1];
             posicionesPosibles += "" + (y - 1) + "" + (x + 1) + "_";
         } catch (Exception ex) {
         }
         try {
-            String forcarError = tableroM[y - 1][x - 1];
+            // String forcarError = tableroM[y - 1][x - 1];
             posicionesPosibles += "" + (y - 1) + "" + (x - 1) + "_";
         } catch (Exception ex) {
         }
@@ -351,13 +351,13 @@ public class Movimientos {
         String posicionesPosibles = "";
 
         try {
-            String forcarError = tableroM[y + 1][x + 1];
+            // String forcarError = tableroM[y + 1][x + 1];
             posicionesPosibles += "" + (y + 1) + "" + (x + 1) + "_";
         } catch (Exception ex) {
         }
 
         try {
-            String forcarError = tableroM[y + 1][x - 1];
+            // String forcarError = tableroM[y + 1][x - 1];
             posicionesPosibles += "" + (y + 1) + "" + (x - 1) + "_";
         } catch (Exception ex) {
         }
@@ -1267,55 +1267,55 @@ public class Movimientos {
         String posicionesPosibles = "";
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 2][x - 1];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y - 2][x - 1];
             posicionesPosibles += "" + (y - 2) + "" + (x - 1) + "_";
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 2][x + 1];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y - 2][x + 1];
             posicionesPosibles += "" + (y - 2) + "" + (x + 1) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 2][x - 1];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y + 2][x - 1];
             posicionesPosibles += "" + (y + 2) + "" + (x - 1) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 2][x + 1];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y + 2][x + 1];
             posicionesPosibles += "" + (y + 2) + "" + (x + 1) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 1][x - 2];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y - 1][x - 2];
             posicionesPosibles += "" + (y - 1) + "" + (x - 2) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 1][x - 2];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y + 1][x - 2];
             posicionesPosibles += "" + (y + 1) + "" + (x - 2) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 1][x + 2];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y - 1][x + 2];
             posicionesPosibles += "" + (y - 1) + "" + (x + 2) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 1][x + 2];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y + 1][x + 2];
             posicionesPosibles += "" + (y + 1) + "" + (x + 2) + "_";
 
         } catch (Exception ex) {
@@ -1334,55 +1334,55 @@ public class Movimientos {
         String posicionesPosibles = "";
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 2][x - 1];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y - 2][x - 1];
             posicionesPosibles += "" + (y - 2) + "" + (x - 1) + "_";
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 2][x + 1];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y - 2][x + 1];
             posicionesPosibles += "" + (y - 2) + "" + (x + 1) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 2][x - 1];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y + 2][x - 1];
             posicionesPosibles += "" + (y + 2) + "" + (x - 1) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 2][x + 1];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y + 2][x + 1];
             posicionesPosibles += "" + (y + 2) + "" + (x + 1) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 1][x - 2];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y - 1][x - 2];
             posicionesPosibles += "" + (y - 1) + "" + (x - 2) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 1][x - 2];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y + 1][x - 2];
             posicionesPosibles += "" + (y + 1) + "" + (x - 2) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y - 1][x + 2];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y - 1][x + 2];
             posicionesPosibles += "" + (y - 1) + "" + (x + 2) + "_";
 
         } catch (Exception ex) {
         }
 
         try {
-            String estoSirvePorSiNoExisteQueDeError = tableroM[y + 1][x + 2];
+            // String estoSirvePorSiNoExisteQueDeError = tableroM[y + 1][x + 2];
             posicionesPosibles += "" + (y + 1) + "" + (x + 2) + "_";
 
         } catch (Exception ex) {

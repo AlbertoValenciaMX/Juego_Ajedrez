@@ -443,7 +443,7 @@ public class VistaTablero extends javax.swing.JFrame {
         c77.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(c77);
 
-        jMenu1.setText("Restart");
+        jMenu1.setText("Reiniciar");
         jMenu1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu1ActionPerformed(evt);
@@ -460,7 +460,7 @@ public class VistaTablero extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Exit");
+        jMenu2.setText("Salir");
 
         jMenuItem2.setText("Aceptar");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
